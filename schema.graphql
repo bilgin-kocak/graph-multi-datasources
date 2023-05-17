@@ -1,0 +1,77 @@
+type Stake @entity {
+  id: ID!
+  user: Bytes! # address
+  hroId: BigInt!
+  honAmount: BigInt!
+  lpAmount: BigInt!
+  tierId: BigInt!
+  stakeTimestamp: BigInt!
+  unstakeTimestamp: BigInt
+  isStaked: Boolean!
+}
+
+type StakeTotal @entity {
+  id: ID!
+  user: Bytes!
+  hroAmount: BigInt!
+  honAmount: BigInt!
+  lpAmount: BigInt!
+}
+
+type Tier @entity {
+  id: ID!
+  tierId: BigInt!
+  hroAmount: BigInt!
+}
+
+type Attribute @entity {
+  id: ID!
+  display_type: String
+  trait_type: String
+  value: String
+}
+
+type Regions @entity {
+  id: ID!
+  region0: Int
+  region1: Int
+  region2: Int
+  region3: Int
+  region4: Int
+  region5: Int
+  region6: Int
+}
+
+type Metadata @entity {
+  name: String
+  description: String
+  image: String
+  character: String
+  rarity_symbol: Int
+  attributes: [Attribute!]
+  regions: Regions
+  extra: BigInt
+  random_number: String
+  collection_description: String
+  id: ID!
+  external_url: String
+  image_cid: String
+}
+type Nft @entity {
+  id: ID!
+  tokenID: BigInt!
+  tokenContract: Bytes!
+  owner: Bytes!
+  createdAtTimestamp: BigInt!
+  tokenURI: String
+  metadata: Metadata
+}
+
+type TransferHistory @entity {
+  id: ID!
+  tokenID: BigInt!
+  tokenContract: Bytes!
+  from: Bytes!
+  to: Bytes!
+  createdAtTimestamp: BigInt!
+}

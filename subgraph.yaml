@@ -1,0 +1,54 @@
+specVersion: 0.0.5
+description: Hero Nft Liquidity Pool
+repository: https://github.com/heroesofnft/subgraphs
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: LiquidityPoolV0
+    network: herotestnet
+    source:
+      address: "0x643E16A4C09BEd8F59A5D54499b1564F36906eE6"
+      abi: LiquidityPoolV0
+      startBlock: 31000
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - Stake
+        - StakeTotal
+        - Tier
+      abis:
+        - name: LiquidityPoolV0
+          file: ./abis/LiquidityPoolV0.json
+      eventHandlers:
+        - event: Stake(address,uint256,uint256,uint256,uint256)
+          handler: handleStake
+        - event: Unstake(address,uint256,uint256)
+          handler: handleUnstake
+      file: ./src/liquiditypool.ts
+  - kind: ethereum/contract
+    name: HeroesToken
+    network: herotestnet
+    source:
+      address: "0x8d553eE8BC386dD7c247B993a142CCc45507e805"
+      abi: HeroesToken
+      startBlock: 31848
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - Attribute
+        - Regions
+        - Metadata
+        - Nft
+        - TransferHistory
+      abis:
+        - name: HeroesToken
+          file: ./abis/HeroesToken.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransferERC721
+      file: ./src/heroestoken.ts
